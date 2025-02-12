@@ -1,7 +1,10 @@
 package com.apiexamples.examples.controller;
 
 import com.apiexamples.examples.entity.Registration;
+import com.apiexamples.examples.payload.RegistrationDto;
 import com.apiexamples.examples.service.RegistrationService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +22,9 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
     @PostMapping("/create")
-    public Registration addRegistration(@RequestBody Registration registration){
-        Registration savedEntity = registrationService.createRegistration(registration);
-        return savedEntity;
+    public ResponseEntity<RegistrationDto> addRegistration(@RequestBody RegistrationDto registrationDto){
+        RegistrationDto regDto = registrationService.createRegistration(registrationDto);
+        return new ResponseEntity<>(regDto, HttpStatus.CREATED);
 
 
     }

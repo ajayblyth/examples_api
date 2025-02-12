@@ -1,7 +1,7 @@
 package com.apiexamples.examples.service;
 
-import com.apiexamples.examples.entity.Registration;
+import com.apiexamples.examples.payload.RegistrationDto;
 
 public interface RegistrationService {
-     Registration createRegistration(Registration registration);
+     RegistrationDto createRegistration(RegistrationDto registrationDto);
 }
