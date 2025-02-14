@@ -8,4 +8,6 @@ public interface RegistrationService {
      void deleteRegistrationById(long id);
 
      RegistrationDto updateRegistration(long id, RegistrationDto registrationDto);
+
+     RegistrationDto fetchById(long id);
 }

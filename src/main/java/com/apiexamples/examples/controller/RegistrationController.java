@@ -1,7 +1,7 @@
 package com.apiexamples.examples.controller;
 
-import com.apiexamples.examples.entity.Registration;
 import com.apiexamples.examples.payload.RegistrationDto;
+import com.apiexamples.examples.repository.RegistrationRepository;
 import com.apiexamples.examples.service.RegistrationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,13 @@ public class RegistrationController {
         RegistrationDto regDto = registrationService.createRegistration(registrationDto);
         return new ResponseEntity<>(regDto, HttpStatus.CREATED);
     }
+    @GetMapping("/get/{id}")
+    public ResponseEntity<RegistrationDto> getRegistrationById(@PathVariable long id){
+        RegistrationDto dto = registrationService.fetchById(id);
+return new ResponseEntity<>(dto, HttpStatus.OK);
+
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity< String> deleteRegistration(@RequestParam long id){
         registrationService.deleteRegistrationById(id);

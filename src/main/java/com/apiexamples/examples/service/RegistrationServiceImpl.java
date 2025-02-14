@@ -38,8 +38,14 @@ public class RegistrationServiceImpl implements  RegistrationService {
         registration.setMobile(registrationDto.getMobile());
         registration.setEmail(registrationDto.getEmail());
         Registration savedEntity = registrationRepository.save(registration);
-        RegistrationDto dto = mapToDto(savedEntity);
-        return dto;
+       return mapToDto(savedEntity);
+    }
+
+    @Override
+    public RegistrationDto fetchById(long id) {
+     Registration byId = registrationRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException(" Registration not found"));
+     return mapToDto(byId);
     }
 
     Registration mapToEntity(RegistrationDto dto) {
