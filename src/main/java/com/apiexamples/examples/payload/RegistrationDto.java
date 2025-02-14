@@ -13,5 +13,6 @@ public class RegistrationDto {
     private String email;
 
     private String mobile;
+    private String message;
 
 }
