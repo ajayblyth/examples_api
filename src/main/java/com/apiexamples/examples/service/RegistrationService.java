@@ -6,4 +6,6 @@ public interface RegistrationService {
      RegistrationDto createRegistration(RegistrationDto registrationDto);
 
      void deleteRegistrationById(long id);
+
+     RegistrationDto updateRegistration(long id, RegistrationDto registrationDto);
 }

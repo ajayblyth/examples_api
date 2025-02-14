@@ -29,5 +29,11 @@ public class RegistrationController {
         return  new ResponseEntity<>("Registration deleted " , HttpStatus.OK);
 
     }
+    @PutMapping("/update")
+    public ResponseEntity< RegistrationDto> updateById(@RequestParam long id,
+                                                       @RequestBody RegistrationDto registrationDto){
+        RegistrationDto dto = registrationService.updateRegistration(id, registrationDto);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 
 }

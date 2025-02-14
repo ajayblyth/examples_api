@@ -5,6 +5,8 @@ import com.apiexamples.examples.payload.RegistrationDto;
 import com.apiexamples.examples.repository.RegistrationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 
 public class RegistrationServiceImpl implements  RegistrationService {
@@ -26,6 +28,18 @@ public class RegistrationServiceImpl implements  RegistrationService {
     public void deleteRegistrationById(long id) {
         registrationRepository.deleteById(id);
 
+    }
+
+    @Override
+    public RegistrationDto updateRegistration(long id, RegistrationDto registrationDto) {
+        Optional<Registration> opReg= registrationRepository.findById(id);
+        Registration registration = opReg.get();
+        registration.setName(registrationDto.getName());
+        registration.setMobile(registrationDto.getMobile());
+        registration.setEmail(registrationDto.getEmail());
+        Registration savedEntity = registrationRepository.save(registration);
+        RegistrationDto dto = mapToDto(savedEntity);
+        return dto;
     }
 
     Registration mapToEntity(RegistrationDto dto) {
