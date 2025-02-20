@@ -10,4 +10,5 @@ public interface RegistrationService {
      RegistrationDto updateRegistration(long id, RegistrationDto registrationDto);
 
      RegistrationDto fetchById(long id);
+
 }
