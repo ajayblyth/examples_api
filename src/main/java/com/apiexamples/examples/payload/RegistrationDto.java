@@ -2,6 +2,7 @@ package com.apiexamples.examples.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
@@ -18,9 +19,11 @@ public class RegistrationDto {
     @Size(min = 2, max = 30, message = "name should be between 3-3- characters")
     private String name;
 
+    @Email(message = "wrong email format")
     private String email;
 
     private String mobile;
+
     @JsonIgnore
     private String message;
 

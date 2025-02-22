@@ -67,6 +67,14 @@ Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?
         return registrationDtos;
     }
 
+    @Override
+    public RegistrationDto getRegistrationById(Long id) {
+        Optional<Registration> opReg = registrationRepository.findById(id);
+       Registration registration= opReg.get();
+      RegistrationDto dto =  mapToDto(registration);
+        return dto;
+    }
+
 
     Registration mapToEntity(RegistrationDto dto) {
 

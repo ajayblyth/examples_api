@@ -60,5 +60,9 @@ public class RegistrationController {
         RegistrationDto dto = registrationService.updateRegistration(id, registrationDto);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
-
+@GetMapping("/byId")
+    public ResponseEntity<RegistrationDto> getRegistrationById(@RequestParam Long id){
+       RegistrationDto dto= registrationService.getRegistrationById(id);
+       return new ResponseEntity<>(dto, HttpStatus.OK);
+}
 }
