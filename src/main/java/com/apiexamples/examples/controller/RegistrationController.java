@@ -2,10 +2,13 @@ package com.apiexamples.examples.controller;
 
 import com.apiexamples.examples.payload.RegistrationDto;
 import com.apiexamples.examples.service.RegistrationService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.Binding;
 import java.util.List;
 
 @RestController
@@ -22,7 +25,11 @@ public class RegistrationController {
         this.registrationService = registrationService;
     }
     @PostMapping("/create")
-    public ResponseEntity<RegistrationDto> addRegistration(@RequestBody RegistrationDto registrationDto){
+    public ResponseEntity<?> addRegistration(@Valid  @RequestBody RegistrationDto registrationDto,
+                                                           BindingResult result){
+        if(result.hasErrors()){
+            return new ResponseEntity<>(result.getFieldError().getDefaultMessage(),HttpStatus.BAD_REQUEST);
+        }
         RegistrationDto regDto = registrationService.createRegistration(registrationDto);
         return new ResponseEntity<>(regDto, HttpStatus.CREATED);
     }
