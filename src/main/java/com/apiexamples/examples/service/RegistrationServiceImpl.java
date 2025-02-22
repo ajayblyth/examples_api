@@ -6,6 +6,7 @@ import com.apiexamples.examples.repository.RegistrationRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,11 +48,19 @@ public class RegistrationServiceImpl implements  RegistrationService {
     }
 
     @Override
-    public List<RegistrationDto> getAllRegistrations(int pageNo, int pageSize) {
+    public List<RegistrationDto> getAllRegistrations(int pageNo, int pageSize, String sortBy, String sortDir) {
 
 //        List<Registration> registrations = registrationRepository.findAll();
 
-        Pageable pageable = PageRequest.of(pageNo,pageSize); //gives only page data which is requested
+Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?
+        Sort.by(Sort.Direction.ASC,sortBy) : Sort.by(Sort.Direction.DESC,sortBy);
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize, sort);
+
+//        Pageable pageable = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+        //PageRequest.of() gives only page data which is requested
+        //it only accepts sort object so we use Sort.by() to convert string into object
+
         Page<Registration> all = registrationRepository.findAll(pageable);
         List<Registration> registrations = all.getContent();//getContent() converts all page content to list
         List<RegistrationDto> registrationDtos = registrations.stream().map(x->mapToDto(x)).collect(Collectors.toList());

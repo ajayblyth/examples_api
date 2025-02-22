@@ -11,6 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/registration")
 
+
+
 //http://localhost:8080/api/v1/registration
 public class RegistrationController {
 
@@ -24,13 +26,17 @@ public class RegistrationController {
         RegistrationDto regDto = registrationService.createRegistration(registrationDto);
         return new ResponseEntity<>(regDto, HttpStatus.CREATED);
     }
+
+//    http://localhost:8080/api/v1/registration?pageNo=0&pageSize=8&sortby=email
     @GetMapping()
     public ResponseEntity<List<RegistrationDto>> getAllRegistrations(
             @RequestParam(name ="pageNo", defaultValue = "0", required = false)int pageNo,
-            @RequestParam(name= "pageSize", defaultValue = "5", required = false)int pageSize)
-    {
+            @RequestParam(name= "pageSize", defaultValue = "5", required = false)int pageSize,
+            @RequestParam(name = "sortby", defaultValue = "name", required = false)String sortBy,
+            @RequestParam(name ="sortDir",defaultValue = "name",required = false)String sortDir
+            ){
 
-        List<RegistrationDto> dto =registrationService.getAllRegistrations(pageNo,pageSize);
+        List<RegistrationDto> dto =registrationService.getAllRegistrations(pageNo,pageSize,sortBy,sortDir);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 //http://localhost:8080/api/v1/registration?id=
