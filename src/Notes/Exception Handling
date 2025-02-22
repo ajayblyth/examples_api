@@ -1,0 +1,29 @@
+Breakdown of Exception Hierarchy
+1. Throwable (Root Class)
+Base class for all exceptions and errors.
+
+2. Exception (Recoverable Exceptions)
+Represents conditions that a program should catch and handle.
+Checked Exceptions: Must be handled explicitly using try-catch or throws in method signatures.
+
+Examples:
+IOException – Occurs during file operations.
+SQLException – Occurs in database operations.
+ParseException – Occurs when parsing strings to date/numbers.
+InterruptedException – Occurs when a thread is interrupted.
+
+3.RuntimeException (Unchecked Exceptions)
+Subclass of Exception, does not require explicit handling.
+Typically caused by programming errors (e.g., NullPointerException, IndexOutOfBoundsException).
+
+NullPointerException – Accessing an object reference that is null.
+ArithmeticException – Division by zero.
+ArrayIndexOutOfBoundsException – Accessing an invalid index in an array.
+IllegalArgumentException – Passing an invalid argument to a method.
+
+4.Error (Serious System Errors)
+Represents serious problems that a program should not try to handle.
+Usually caused by JVM-level failures (e.g., OutOfMemoryError, StackOverflowError).
+OutOfMemoryError – JVM runs out of memory.
+StackOverflowError – Infinite recursion.
+VirtualMachineError – JVM internal issues.
