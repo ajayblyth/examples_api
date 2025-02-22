@@ -3,6 +3,9 @@ package com.apiexamples.examples.service;
 import com.apiexamples.examples.entity.Registration;
 import com.apiexamples.examples.payload.RegistrationDto;
 import com.apiexamples.examples.repository.RegistrationRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,8 +47,13 @@ public class RegistrationServiceImpl implements  RegistrationService {
     }
 
     @Override
-    public List<RegistrationDto> getAllRegistrations() {
-        List<Registration> registrations = registrationRepository.findAll();
+    public List<RegistrationDto> getAllRegistrations(int pageNo, int pageSize) {
+
+//        List<Registration> registrations = registrationRepository.findAll();
+
+        Pageable pageable = PageRequest.of(pageNo,pageSize); //gives only page data which is requested
+        Page<Registration> all = registrationRepository.findAll(pageable);
+        List<Registration> registrations = all.getContent();//getContent() converts all page content to list
         List<RegistrationDto> registrationDtos = registrations.stream().map(x->mapToDto(x)).collect(Collectors.toList());
         return registrationDtos;
     }

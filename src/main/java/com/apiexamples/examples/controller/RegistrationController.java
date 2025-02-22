@@ -25,8 +25,12 @@ public class RegistrationController {
         return new ResponseEntity<>(regDto, HttpStatus.CREATED);
     }
     @GetMapping()
-    public ResponseEntity<List<RegistrationDto>> getAllRegistrations(){
-        List<RegistrationDto> dto =registrationService.getAllRegistrations();
+    public ResponseEntity<List<RegistrationDto>> getAllRegistrations(
+            @RequestParam(name ="pageNo", defaultValue = "0", required = false)int pageNo,
+            @RequestParam(name= "pageSize", defaultValue = "5", required = false)int pageSize)
+    {
+
+        List<RegistrationDto> dto =registrationService.getAllRegistrations(pageNo,pageSize);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 //http://localhost:8080/api/v1/registration?id=

@@ -12,5 +12,5 @@ public interface RegistrationService {
      RegistrationDto updateRegistration(long id, RegistrationDto registrationDto);
 
 
-     List<RegistrationDto> getAllRegistrations();
+     List<RegistrationDto> getAllRegistrations(int pageNo, int pageSize);
 }
