@@ -1,0 +1,49 @@
+Common Validation Annotations (javax.validation.constraints)
+
+@NotNull – Must not be null, but can be empty. Example: @NotNull name;
+
+@NotEmpty – Must not be null and must have at least one character. Example: @NotEmpty username;
+
+@NotBlank – Must not be null, empty, or just whitespace. Example: @NotBlank password;
+
+@Size(min = 3, max = 10) – Length must be between 3 and 10. Example: @Size(min = 3, max = 10) nickname;
+
+@Min(18) – Minimum value must be 18 or greater. Example: @Min(18) age;
+
+@Max(100) – Maximum value must be 100 or less. Example: @Max(100) score;
+
+@Positive – Must be greater than 0. Example: @Positive quantity;
+
+@PositiveOrZero – Must be 0 or greater. Example: @PositiveOrZero stock;
+
+@Negative – Must be less than 0. Example: @Negative temperature;
+
+@NegativeOrZero – Must be 0 or less. Example: @NegativeOrZero debt;
+
+@Pattern(regexp = "^[a-zA-Z0-9]+$") – Must match the regex pattern. Example: @Pattern(regexp = "^[a-zA-Z0-9]+$") username;
+
+@Email – Must be a valid email format. Example: @Email email;
+
+@Digits(integer = 5, fraction = 2) – Max 5 integer digits and 2 decimal places. Example: @Digits(integer = 5, fraction = 2) price;
+
+@DecimalMin("10.5") – Must be at least 10.5. Example: @DecimalMin("10.5") discount;
+
+@DecimalMax("99.9") – Must be at most 99.9. Example: @DecimalMax("99.9") discount;
+
+@Past – Must be a past date. Example: @Past birthDate;
+
+@PastOrPresent – Must be a past or present date. Example: @PastOrPresent createdAt;
+
+@Future – Must be a future date. Example: @Future expiryDate;
+
+@FutureOrPresent – Must be a future or present date. Example: @FutureOrPresent scheduledDate;
+
+Spring Boot Validation Annotations (Spring-specific)
+
+@Valid – Triggers validation for nested objects. Example: @Valid address;
+
+@Validated – Enables validation on service methods. Example: @Validated register(@Valid user);
+
+Custom Validation
+
+@Constraint(validatedBy = CustomValidator.class) – Used for custom validation. Example: @Constraint(validatedBy = AgeValidator.class) age;
