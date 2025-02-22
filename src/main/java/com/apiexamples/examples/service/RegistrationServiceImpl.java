@@ -5,7 +5,9 @@ import com.apiexamples.examples.payload.RegistrationDto;
 import com.apiexamples.examples.repository.RegistrationRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 
@@ -42,11 +44,12 @@ public class RegistrationServiceImpl implements  RegistrationService {
     }
 
     @Override
-    public RegistrationDto fetchById(long id) {
-     Registration byId = registrationRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException(" Registration not found"));
-     return mapToDto(byId);
+    public List<RegistrationDto> getAllRegistrations() {
+        List<Registration> registrations = registrationRepository.findAll();
+        List<RegistrationDto> registrationDtos = registrations.stream().map(x->mapToDto(x)).collect(Collectors.toList());
+        return registrationDtos;
     }
+
 
     Registration mapToEntity(RegistrationDto dto) {
 

@@ -2,6 +2,8 @@ package com.apiexamples.examples.service;
 
 import com.apiexamples.examples.payload.RegistrationDto;
 
+import java.util.List;
+
 public interface RegistrationService {
      RegistrationDto createRegistration(RegistrationDto registrationDto);
 
@@ -9,6 +11,6 @@ public interface RegistrationService {
 
      RegistrationDto updateRegistration(long id, RegistrationDto registrationDto);
 
-     RegistrationDto fetchById(long id);
 
+     List<RegistrationDto> getAllRegistrations();
 }
