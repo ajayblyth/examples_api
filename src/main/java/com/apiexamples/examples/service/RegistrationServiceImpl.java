@@ -1,5 +1,6 @@
 package com.apiexamples.examples.service;
 
+import com.apiexamples.examples.Exceptions.ResourceNotFound;
 import com.apiexamples.examples.entity.Registration;
 import com.apiexamples.examples.payload.RegistrationDto;
 import com.apiexamples.examples.repository.RegistrationRepository;
@@ -68,9 +69,9 @@ Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name())?
     }
 
     @Override
-    public RegistrationDto getRegistrationById(Long id) {
-        Optional<Registration> opReg = registrationRepository.findById(id);
-       Registration registration= opReg.get();
+    public RegistrationDto getRegistrationById(long id) {
+     Registration registration = registrationRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFound("Registration is not found with the id = "+ id));
       RegistrationDto dto =  mapToDto(registration);
         return dto;
     }

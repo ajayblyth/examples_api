@@ -1,0 +1,52 @@
+Step 1: Modify the Controller or ServiceImpl to Throw Exception
+
+Registration registration =getRegistrationById(@RequestParam Long id).orElseThrow( ()-> new ResourceNotFoundException
+Step 2: Create a Custom Exception Class
+Create a custom exception class ResourceNotFoundException to handle this scenario.
+
+java
+Copy
+Edit
+public class ResourceNotFoundException extends RuntimeException {
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
+}
+Step 3: Handle Exception Using @ControllerAdvice
+To handle this exception globally and return a meaningful response, create an exception handler class:
+
+java
+Copy
+Edit
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+}
+How It Works:
+If id is not found in the database, registrationService.getRegistrationById(id) will return null.
+The controller checks if dto == null, and if so, it throws a ResourceNotFoundException.
+The global exception handler (@RestControllerAdvice) catches this exception and returns an HTTP 404 NOT FOUND status with a meaningful message.
+Example API Response When ID is Not Found:
+Request:
+bash
+Copy
+Edit
+GET /byId?id=1000
+Response:
+json
+Copy
+Edit
+{
+    "status": 404,
+    "error": "Not Found",
+    "message": "Registration not found with id: 1000"
+}

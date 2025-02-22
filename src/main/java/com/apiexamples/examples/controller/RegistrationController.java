@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.naming.Binding;
 import java.util.List;
 
 @RestController
@@ -61,7 +60,7 @@ public class RegistrationController {
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 @GetMapping("/byId")
-    public ResponseEntity<RegistrationDto> getRegistrationById(@RequestParam Long id){
+    public ResponseEntity<RegistrationDto> getRegistrationById(@RequestParam long id){
        RegistrationDto dto= registrationService.getRegistrationById(id);
        return new ResponseEntity<>(dto, HttpStatus.OK);
 }

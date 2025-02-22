@@ -14,5 +14,5 @@ public interface RegistrationService {
 
      List<RegistrationDto> getAllRegistrations(int pageNo, int pageSize, String sortBy, String sortDir);
 
-     RegistrationDto getRegistrationById(Long id);
+     RegistrationDto getRegistrationById(long id);
 }

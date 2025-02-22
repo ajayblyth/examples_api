@@ -27,3 +27,28 @@ Usually caused by JVM-level failures (e.g., OutOfMemoryError, StackOverflowError
 OutOfMemoryError – JVM runs out of memory.
 StackOverflowError – Infinite recursion.
 VirtualMachineError – JVM internal issues.
+
+---------------------------------------------------------
+
+Feature     	@ControllerAdvice	                               @RestControllerAdvice
+Scope	        Works for both @Controller and @RestController	   Works only for @RestController
+Response Type	Can return HTML (View) or JSON	                   Always returns JSON
+Use Case	    For apps with both web pages + REST APIs	        For REST API-only apps
+
+
+-----------------------------------------
+@ExceptionHandler(Exception.class): This annotation tells Spring that the method immediately following it will handle any
+exceptions of type Exception.
+The Exception.class argument specifies the type of exception this handler will respond to (in this case, any Exception that is thrown
+ by the controllers).
+Exception is the superclass of all exceptions in Java, so this method will catch any type of exception unless
+ a more specific exception handler is provided.
+
+ ------------------------------------------------
+ public ResponseEntity<String>: The method handleException returns a ResponseEntity.
+ ResponseEntity is a class in Spring that represents an HTTP response, including status code, headers, and body. The body here is a String,
+  which will be the message returned to the client (in this case, an error message).
+
+ Exception ex: This parameter represents the exception that was thrown. When an exception occurs, it will be passed to this method as an argument,
+ allowing you to access the exception details (like its message).
+
