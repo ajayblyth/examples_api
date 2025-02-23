@@ -5,6 +5,7 @@ Normalistaion need to be followed in ER
 
 ------------------------------------------------
 ER Diagram (Entity-Relationship Diagram)
+
 An Entity-Relationship Diagram (ER Diagram) is a visual representation of the entities in a database and
  the relationships between them. It helps to organize and structure data in a database system.
 
@@ -29,7 +30,8 @@ Cardinality: Describes the number of instances of one entity that can or must be
  1NF is the most basic form of normalization. It ensures that:
 
  Each table has a primary key: A unique identifier for every record in the table.
- Each column contains atomic values: There should be no repeating groups, arrays, or sets of data in a single column. Each field must contain only one value.
+ Each column contains atomic values: There should be no repeating groups, arrays, or sets of data in a single column.
+ Each field must contain only one value.
  Each column contains values of the same type: All values in a column should be of the same data type.
  The order in which data is stored does not matter.
 
@@ -73,6 +75,7 @@ Cardinality: Describes the number of instances of one entity that can or must be
 
 
  -------------------------------------------------------------------------------------------------------------
+
 2NF (Second Normal Form)
 Second Normal Form (2NF) builds on First Normal Form (1NF) by addressing a specific type of redundancy: partial dependency.
 
@@ -145,8 +148,10 @@ Improves data integrity by ensuring that non-key attributes are related to the w
 Third Normal Form (3NF) builds on Second Normal Form (2NF) by addressing transitive dependencies.
 
 Key Concepts:
-Transitive Dependency: A transitive dependency exists when a non-key attribute depends on another non-key attribute. For example, if A -> B and B -> C, then A -> C is a transitive dependency.
-Elimination of Transitive Dependencies: In 3NF, there should be no transitive dependencies. All non-key attributes must depend directly on the primary key.
+Transitive Dependency: A transitive dependency exists when a non-key attribute depends on another non-key attribute. For example,
+if A -> B and B -> C, then A -> C is a transitive dependency.
+Elimination of Transitive Dependencies: In 3NF, there should be no transitive dependencies.
+All non-key attributes must depend directly on the primary key.
 
 Steps to Achieve 3NF:
 Ensure the table is in 2NF.
@@ -166,8 +171,8 @@ DepartmentName and ManagerID are transitively dependent on EmployeeID through De
 This table violates 3NF because of transitive dependency.
 
 Converting to 3NF:
-To move this table to 3NF, we need to create a new table for Department Information and remove the DepartmentName and ManagerID from
- the Employee Table.
+To move this table to 3NF, we need to create a new table for Department Information and remove the DepartmentName and
+ManagerID from the Employee Table.
 
 New Tables:
 Employee Table:
