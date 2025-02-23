@@ -1,0 +1,217 @@
+requirement document is prepared by the business analyst  by interacting with the customers.
+Based on requirements er diagram is prepared.
+Without proper er diagram , their will be problems like in searching the data.
+Normalistaion need to be followed in ER
+
+------------------------------------------------
+ER Diagram (Entity-Relationship Diagram)
+An Entity-Relationship Diagram (ER Diagram) is a visual representation of the entities in a database and
+ the relationships between them. It helps to organize and structure data in a database system.
+
+Entities: Represent objects or concepts that are of interest. These can be things like customers, products, orders, etc.
+
+Attributes: Represent the properties or details about entities. For example, a "Customer" entity might have
+ attributes like "Name," "Address," and "Phone Number."
+
+Relationships: Represent the associations between entities. For example, a "Customer" may place an "Order."
+ Relationships can have attributes too, such as an "Order Date" or "Quantity."
+
+Components of an ER Diagram:
+Entity: Typically represented by a rectangle.
+Attribute: Represented by ovals, connected to their respective entities.
+Relationship: Represented by diamonds, connecting related entities.
+Primary Key: Often underlined to denote the unique identifier for an entity.
+Cardinality: Describes the number of instances of one entity that can or must be associated with each instance of another entity
+ (e.g., one-to-many, many-to-many, etc.).
+
+ ----------------------------------------------------------
+ 1NF (First Normal Form) Explained in Detail
+ 1NF is the most basic form of normalization. It ensures that:
+
+ Each table has a primary key: A unique identifier for every record in the table.
+ Each column contains atomic values: There should be no repeating groups, arrays, or sets of data in a single column. Each field must contain only one value.
+ Each column contains values of the same type: All values in a column should be of the same data type.
+ The order in which data is stored does not matter.
+
+ Example of a Table Not in 1NF:
+ Imagine a table that stores information about students and the subjects they have enrolled in:
+
+ StudentID	      Name	              Subjects
+ 1	              John	              Math, Science, History
+ 2             	  Sarah      	      English, Math
+ 3	              Michael	           Science, Geography, English
+
+
+ In this case, the Subjects column contains multiple values (e.g., "Math, Science, History") in one cell. This violates 1NF.
+
+ To Convert to 1NF:
+ We need to make sure that each attribute contains atomic values (only one value per field).
+  This can be done by creating a new row for each combination of student and subject:
+
+ StudentID	Name	      Subject
+ 1	        John	      Math
+ 1	        John	      Science
+ 1	        John	      History
+ 2	        Sarah	      English
+ 2	        Sarah	      Math
+ 3	        Michael	      Science
+ 3	        Michael	      Geography
+ 3	        Michael	      English
+
+ Now, the Subjects column contains atomic values, and the table is in 1NF.
+
+ Advantages of 1NF:
+ Ensures data consistency.
+ Allows for easier querying and manipulation.
+ Reduces redundancy by eliminating multiple values in a single column.
+
+
+ Key Takeaways:
+ 1NF eliminates duplicate data and organizes data into atomic values, ensuring that each record and field is uniquely
+ identifiable and clear.
+
+
+
+ -------------------------------------------------------------------------------------------------------------
+2NF (Second Normal Form)
+Second Normal Form (2NF) builds on First Normal Form (1NF) by addressing a specific type of redundancy: partial dependency.
+
+Key Concepts:
+Fully Dependent on Primary Key: In 2NF, every non-key attribute (column) in a table must depend on the whole primary key,
+not just part of it.
+Partial Dependency: If a table has a composite primary key (i.e., a primary key made up of more than one column),
+ some non-key attributes might depend only on part of the primary key. This is called partial dependency, and it violates 2NF.
+
+Steps to Achieve 2NF:
+Ensure the table is in 1NF.
+Remove partial dependencies by creating new tables. A non-key attribute that depends only on part of the composite key should be
+moved to a separate table.
+
+Example of a Table Not in 2NF:
+Consider a table of Course Enrollments where each student can enroll in multiple courses, and each course has a unique instructor.
+ Assume the primary key is a composite key of StudentID and CourseID:
+
+StudentID	     CourseID	                   Instructor	           StudentName
+1	             101	                        Dr. Smith	            John
+1	             102	                       Dr. Brown	            John
+2	             101	                        Dr.Smith               Sarah
+3	             103	                        Dr.white               Michael
+In this table:
+
+The composite primary key is made up of StudentID and CourseID.
+The Instructor depends only on CourseID (not on StudentID), and thus instructor is partially dependent on the composite primary key.
+The StudentName depends only on StudentID (not on CourseID).
+This table violates 2NF because Instructor and StudentName are partially dependent on the composite primary key.
+
+Converting to 2NF:
+To move this table to 2NF, we create two new tables:
+
+A table for student information (containing only StudentID and StudentName).
+A table for course information (containing CourseID and Instructor).
+
+New Tables:
+
+Student Table:
+
+StudentID	StudentName
+1	        John
+2	        Sarah
+3	        Michael
+
+Course Table:
+
+CourseID	Instructor
+101	         Dr. Smith
+102	        Dr. Brown
+103	        Dr. White
+
+Enrollment Table:
+
+StudentID	CourseID
+1	         101
+1          	102
+2	        101
+3	        103
+
+Now, all non-key attributes are fully dependent on the primary key, and the table is in 2NF.
+
+Advantages of 2NF:
+Reduces redundancy by removing partial dependencies.
+Improves data integrity by ensuring that non-key attributes are related to the whole primary key.
+
+-----------------------------------------------------------------------------------------------------
+
+3NF (Third Normal Form)
+Third Normal Form (3NF) builds on Second Normal Form (2NF) by addressing transitive dependencies.
+
+Key Concepts:
+Transitive Dependency: A transitive dependency exists when a non-key attribute depends on another non-key attribute. For example, if A -> B and B -> C, then A -> C is a transitive dependency.
+Elimination of Transitive Dependencies: In 3NF, there should be no transitive dependencies. All non-key attributes must depend directly on the primary key.
+
+Steps to Achieve 3NF:
+Ensure the table is in 2NF.
+Remove transitive dependencies by creating new tables and moving the non-key attribute that depends on another non-key attribute.
+
+Example of a Table Not in 3NF:
+Consider a Employee Table where each employee has a DepartmentID, and each department has a DepartmentName and a ManagerID.
+
+EmployeeID	       EmployeeName  	DepartmentID	DepartmentName	ManagerID
+1	               John      	    D001	          HR	         M001
+2	               Sarah	        D002	        Finance         M002
+3	              Michael	        D001	          HR	         M001
+
+Here:
+DepartmentName and ManagerID depend on DepartmentID, but DepartmentID depends on the primary key EmployeeID.
+DepartmentName and ManagerID are transitively dependent on EmployeeID through DepartmentID.
+This table violates 3NF because of transitive dependency.
+
+Converting to 3NF:
+To move this table to 3NF, we need to create a new table for Department Information and remove the DepartmentName and ManagerID from
+ the Employee Table.
+
+New Tables:
+Employee Table:
+
+EmployeeID	EmployeeName	DepartmentID
+1	        John	         D001
+2	        Sarah	        D002
+3	        Michael	        D001
+
+Department Table:
+
+DepartmentID	DepartmentName	ManagerID
+D001	         HR	             M001
+D002	         Finance	     M002
+
+Now, there are no transitive dependencies, and the table is in 3NF.
+
+Advantages of 3NF:
+Eliminates transitive dependencies, further improving data integrity.
+Reduces redundancy and ensures that each attribute is directly related to the primary key.
+
+--------------------------------------------------------------------------------------------------
+
+Comparison of 1NF, 2NF, and 3NF
+
+Normal Form	Key Concept	Dependency Type	Focus	Redundancy	Improvement
+
+1NF	Atomicity of data (No repeating groups or arrays)	No repeating groups	Simple structure	Reduced redundancy (atomic values)
+Ensures data consistency by eliminating duplicate values in columns
+
+2NF	Full Dependency (Non-key attributes depend on the entire primary key)	Partial dependencies (only part of composite key)
+More specific relationships	Further reduction of redundancy	Removes partial dependencies, ensuring non-key attributes depend
+fully on the primary key
+
+3NF	Elimination of Transitive Dependencies	Transitive dependencies (non-key attributes depend on other non-key attributes)
+Data integrity	Maximized elimination of redundancy	Removes transitive dependencies for better data integrity.
+
+Summary:
+
+1NF focuses on ensuring atomic values, eliminating repeating groups.
+
+2NF builds on 1NF by removing partial dependencies, especially in tables with composite keys.
+
+3NF goes further by eliminating transitive dependencies, making sure every non-key attribute is directly dependent on the
+primary key and not on other non-key attributes.
+Each subsequent normal form reduces redundancy and improves data integrity by organizing relationships in the data more efficiently.
+
