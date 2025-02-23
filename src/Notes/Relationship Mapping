@@ -1,0 +1,207 @@
+Relationship Mapping in JPA/Hibernate?
+In a relational database, entities (tables) have relationships with each other, such as One-to-One, One-to-Many, and Many-to-Many. JPA/Hibernate provides annotations to map these relationships in Java classes, ensuring proper foreign key constraints and cascade operations.
+
+2. Types of Relationship Mapping
+A. One-to-One (@OneToOne)
+B. One-to-Many (@OneToMany) and Many-to-One (@ManyToOne)
+C. Many-to-Many (@ManyToMany)
+A. One-to-One Mapping (@OneToOne)
+A One-to-One relationship means that one record in an entity is related to exactly one record in another entity. Example: A User has one Profile.
+
+1. Table Structure
+user Table	profile Table
+user_id (PK)	profile_id (PK)
+name	bio
+email	user_id (FK)
+2. Implementation in Java
+Unidirectional Mapping (Foreign Key in Profile)
+java
+Copy
+Edit
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    @OneToOne
+    @JoinColumn(name = "profile_id") // Foreign key in User table
+    private Profile profile;
+}
+java
+Copy
+Edit
+@Entity
+public class Profile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String bio;
+}
+@OneToOne – Defines One-to-One mapping.
+@JoinColumn(name = "profile_id") – Specifies foreign key column.
+Bidirectional Mapping
+To enable navigation from Profile to User, modify the Profile entity:
+
+java
+Copy
+Edit
+@Entity
+public class Profile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String bio;
+
+    @OneToOne(mappedBy = "profile")  // Reference to User
+    private User user;
+}
+mappedBy = "profile" – Specifies that User owns the relationship.
+B. One-to-Many (@OneToMany) and Many-to-One (@ManyToOne)
+A One-to-Many relationship means that one record in an entity is related to multiple records in another entity. Example: A User can have multiple Bookings.
+
+1. Table Structure
+user Table	booking Table
+user_id (PK)	booking_id (PK)
+name	check_in
+email	user_id (FK)
+2. Implementation in Java
+Unidirectional Mapping (Foreign Key in Booking)
+java
+Copy
+Edit
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    @OneToMany
+    @JoinColumn(name = "user_id")  // Foreign key in Booking
+    private List<Booking> bookings;
+}
+java
+Copy
+Edit
+@Entity
+public class Booking {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private LocalDate checkIn;
+}
+@OneToMany – A User can have multiple Bookings.
+@JoinColumn(name = "user_id") – Specifies foreign key in booking table.
+Bidirectional Mapping
+Modify Booking entity to allow back-reference:
+
+java
+Copy
+Edit
+@Entity
+public class Booking {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private LocalDate checkIn;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+}
+@ManyToOne – Many Bookings belong to one User.
+@JoinColumn(name = "user_id") – Foreign key column.
+C. Many-to-Many Mapping (@ManyToMany)
+A Many-to-Many relationship means that multiple records in one table can be associated with multiple records in another table. Example: A User can book multiple Properties, and a Property can be booked by multiple Users.
+
+1. Table Structure (Join Table)
+user Table	user_property (Join Table)	property Table
+user_id (PK)	user_id (FK)	property_id (PK)
+name	property_id (FK)	name
+2. Implementation in Java
+java
+Copy
+Edit
+@Entity
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "user_property",  
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "property_id")
+    )
+    private List<Property> properties;
+}
+java
+Copy
+Edit
+@Entity
+public class Property {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    private String name;
+    
+    @ManyToMany(mappedBy = "properties")
+    private List<User> users;
+}
+@ManyToMany – Defines Many-to-Many relationship.
+@JoinTable – Specifies join table user_property with user_id and property_id.
+mappedBy = "properties" – Defines inverse relationship in Property.
+4. Cascade Operations in Relationship Mapping
+Hibernate provides Cascade Types to automate operations (persist, remove, update) in related entities.
+
+Cascade Type	Description
+CascadeType.ALL	Applies all cascade operations.
+CascadeType.PERSIST	Saves child entities automatically.
+CascadeType.REMOVE	Deletes child entities when parent is deleted.
+CascadeType.MERGE	Updates child entities when parent is updated.
+CascadeType.REFRESH	Reloads entities from the database.
+CascadeType.DETACH	Detaches child entities from persistence context.
+Example:
+
+java
+Copy
+Edit
+@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+private List<Booking> bookings;
+If a User is saved, all Bookings are saved automatically.
+If a User is deleted, all related Bookings are also deleted.
+5. Fetch Types in Relationship Mapping
+Fetch types control how related entities are loaded.
+
+Fetch Type	Description
+FetchType.EAGER	Loads related entity immediately (default for @ManyToOne & @OneToOne).
+FetchType.LAZY	Loads related entity only when needed (default for @OneToMany & @ManyToMany).
+Example:
+
+java
+Copy
+Edit
+@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+private List<Booking> bookings;
+Bookings are loaded only when accessed.
+6. Summary of Relationship Mappings
+Relationship	Description	Example Annotation
+One-to-One	One record in Entity A corresponds to one record in Entity B.	@OneToOne
+One-to-Many	One record in Entity A maps to multiple records in Entity B.	@OneToMany / @ManyToOne
+Many-to-Many	Many records in Entity A map to many records in Entity B.	@ManyToMany
+7. Conclusion
+One-to-One: Used for unique relationships like User-Profile.
+One-to-Many: Used when one parent has multiple children, like User-Bookings.
+Many-to-Many: Used when both sides have multiple references, like Users-Properties.

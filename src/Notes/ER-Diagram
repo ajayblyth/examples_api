@@ -7,7 +7,7 @@ Normalistaion need to be followed in ER
 ER Diagram (Entity-Relationship Diagram)
 
 An Entity-Relationship Diagram (ER Diagram) is a visual representation of the entities in a database and
- the relationships between them. It helps to organize and structure data in a database system.
+the relationships between them. It helps to organize and structure data in a database system.
 
 Entities: Represent objects or concepts that are of interest. These can be things like customers, products, orders, etc.
 
@@ -29,10 +29,9 @@ Cardinality: Describes the number of instances of one entity that can or must be
  1NF (First Normal Form) Explained in Detail
  1NF is the most basic form of normalization. It ensures that:
 
- Each table has a primary key: A unique identifier for every record in the table.
- Each column contains atomic values: There should be no repeating groups, arrays, or sets of data in a single column.
- Each field must contain only one value.
- Each column contains values of the same type: All values in a column should be of the same data type.
+Each table must have a primary key, and every column should contain atomic values of
+the same data type, Each field must hold only one value.
+
  The order in which data is stored does not matter.
 
  Example of a Table Not in 1NF:
@@ -63,10 +62,8 @@ Cardinality: Describes the number of instances of one entity that can or must be
  Now, the Subjects column contains atomic values, and the table is in 1NF.
 
  Advantages of 1NF:
- Ensures data consistency.
- Allows for easier querying and manipulation.
- Reduces redundancy by eliminating multiple values in a single column.
-
+It ensures data consistency, simplifies querying and manipulation,
+and reduces redundancy by eliminating multiple values in a single column.
 
  Key Takeaways:
  1NF eliminates duplicate data and organizes data into atomic values, ensuring that each record and field is uniquely
